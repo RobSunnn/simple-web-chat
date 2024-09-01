@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Room</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<div id="chat-container">
+    <h2>Chat Room</h2>
+    <div id="user-count">Users in chat: </div>
+    <div id="messages"></div>
+    <input type="text" id="message" placeholder="Type your message here..."/>
+    <button onclick="sendMessage()">Send</button>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<!--<script type="text/javascript">-->
+<!--   var stompClient = null;-->
+<!--    var username = null;-->
+
+<!--    function connect() {-->
+<!--        var socket = new SockJS('/chat-websocket');-->
+<!--        stompClient = Stomp.over(socket);-->
+<!--        stompClient.connect({}, function (frame) {-->
+<!--            stompClient.subscribe('/topic/messages', function (messageOutput) {-->
+<!--                var message = JSON.parse(messageOutput.body);-->
+<!--                saveMessage(message);-->
+<!--                showMessage(message);-->
+<!--            });-->
+
+<!--            stompClient.subscribe('/topic/userCount', function (userCountMessage) {-->
+<!--            console.log(userCountMessage.body);-->
+<!--                updateUserCount(userCountMessage.body);-->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+
+<!--    function updateUserCount(count) {-->
+<!--        document.getElementById('user-count').textContent = "Users in chat: " + count;-->
+<!--    }-->
+
+<!--        function sendMessage() {-->
+<!--            var messageContent = document.getElementById('messageInput').value;-->
+<!--            if (messageContent && stompClient) {-->
+<!--                var chatMessage = {-->
+<!--                    sender: username,-->
+<!--                    content: messageContent-->
+<!--                };-->
+<!--                stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));-->
+<!--                saveMessage(chatMessage);  // Save the message immediately after sending-->
+<!--                showMessage(chatMessage);  // Display the message in the chat-->
+<!--                document.getElementById('messageInput').value = '';-->
+<!--            }-->
+<!--        }-->
+
+<!--        function showMessage(message) {-->
+<!--            var messagesDiv = document.getElementById('messages');-->
+<!--            var messageElement = document.createElement('p');-->
+<!--            messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));-->
+<!--            messagesDiv.appendChild(messageElement);-->
+<!--        }-->
+
+<!--        function saveMessage(message) {-->
+<!--            var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];-->
+<!--            chatHistory.push(message);-->
+<!--            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));-->
+<!--        }-->
+
+<!--        function loadChatHistory() {-->
+<!--            var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];-->
+<!--            chatHistory.forEach(function(message) {-->
+<!--                showMessage(message);-->
+<!--            });-->
+<!--        }-->
+
+<!--        function updateUserCount(count) {-->
+<!--            document.getElementById('user-count').textContent = "Users in chat: " + count;-->
+<!--        }-->
+
+<!--        function logout() {-->
+<!--            localStorage.removeItem('username');-->
+<!--            localStorage.removeItem('chatHistory');-->
+<!--            window.location.href = '/login';-->
+<!--        }-->
+
+<!--        window.onload = function() {-->
+<!--            username = localStorage.getItem('username');-->
+<!--            if (!username) {-->
+<!--                var params = new URLSearchParams(window.location.search);-->
+<!--                username = params.get('username');-->
+<!--                if (username) {-->
+<!--                    localStorage.setItem('username', username);-->
+<!--                } else {-->
+<!--                    window.location.href = '/login';-->
+<!--                }-->
+<!--            }-->
+<!--            loadChatHistory();-->
+<!--            connect();-->
+<!--        };-->
+
+<!--</script>-->
+
+<!--<script type="text/javascript">-->
+<!--    var stompClient = null;-->
+<!--    var username = null;-->
+
+<!--    function connect() {-->
+<!--        var socket = new SockJS('/chat-websocket');-->
+<!--        stompClient = Stomp.over(socket);-->
+<!--        stompClient.connect({}, function (frame) {-->
+<!--      if (!stompClient.subscription) {-->
+<!--                stompClient.subscription = stompClient.subscribe('/topic/messages', function (messageOutput) {-->
+<!--                    var message = JSON.parse(messageOutput.body);-->
+<!--                    showMessage(message);-->
+<!--                });-->
+<!--            }-->
+
+<!--            stompClient.subscribe('/topic/userCount', function (userCountMessage) {-->
+<!--                updateUserCount(userCountMessage.body);-->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+
+<!--    function updateUserCount(count) {-->
+<!--        document.getElementById('user-count').textContent = "Users in chat: " + count;-->
+<!--    }-->
+
+<!--    function sendMessage() {-->
+<!--            var messageContent = document.getElementById('messageInput').value;-->
+<!--            if (messageContent && stompClient) {-->
+<!--                var chatMessage = {-->
+<!--                    sender: username,-->
+<!--                    content: messageContent-->
+<!--                };-->
+<!--                stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));-->
+<!--                saveMessage(chatMessage);  // Save the message immediately after sending-->
+<!--                showMessage(chatMessage);  // Display the message in the chat-->
+<!--                document.getElementById('messageInput').value = '';-->
+<!--            }-->
+<!--        }-->
+
+<!--        function showMessage(message) {-->
+<!--            var messagesDiv = document.getElementById('messages');-->
+<!--            var messageElement = document.createElement('p');-->
+<!--            messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));-->
+<!--            messagesDiv.appendChild(messageElement);-->
+<!--        }-->
+
+<!--        function saveMessage(message) {-->
+<!--            var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];-->
+<!--            chatHistory.push(message);-->
+<!--            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));-->
+<!--        }-->
+
+<!--        function loadChatHistory() {-->
+<!--            var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];-->
+<!--            chatHistory.forEach(function(message) {-->
+<!--                showMessage(message);-->
+<!--            });-->
+<!--        }-->
+
+<!--                function logout() {-->
+<!--            localStorage.removeItem('username');-->
+<!--            localStorage.removeItem('chatHistory');-->
+<!--            window.location.href = '/login';-->
+<!--        }-->
+
+
+<!--    window.onload = function() {-->
+<!--         username = localStorage.getItem('username');-->
+<!--            if (!username) {-->
+<!--                var params = new URLSearchParams(window.location.search);-->
+<!--                username = params.get('username');-->
+<!--                if (username) {-->
+<!--                    localStorage.setItem('username', username);-->
+<!--                } else {-->
+<!--                    window.location.href = '/login';-->
+<!--                }-->
+<!--            }-->
+<!--            loadChatHistory();-->
+<!--            connect();-->
+<!--    };-->
+<!--</script>-->
+<script type="text/javascript">
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/chat-websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/queue/messages', function (messageOutput) {
+                var message = JSON.parse(messageOutput.body);
+                showMessage(message);
+            });
+
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                var message = JSON.parse(messageOutput.body);
+                showMessage(message);
+            });
+
+            stompClient.subscribe('/topic/userCount', function (userCountMessage) {
+                updateUserCount(userCountMessage.body);
+            });
+        });
+    }
+
+    function updateUserCount(count) {
+        document.getElementById('user-count').textContent = "Users in chat: " + count;
+    }
+
+    function showMessage(message) {
+        var messagesDiv = document.getElementById('messages');
+        var messageElement = document.createElement('p');
+        messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));
+        messagesDiv.appendChild(messageElement);
+    }
+
+            function loadChatHistory() {
+            var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+            chatHistory.forEach(function(message) {
+                showMessage(message);
+            });
+        }
+
+    function sendMessage() {
+        var messageContent = document.getElementById('message').value.trim();
+        if (messageContent && stompClient) {
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify({'sender': username, 'content': messageContent}));
+            document.getElementById('message').value = '';
+        }
+    }
+
+                    function logout() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('chatHistory');
+            window.location.href = '/login';
+        }
+
+   window.onload = function() {
+        username = localStorage.getItem('username');
+            if (!username) {
+                var params = new URLSearchParams(window.location.search);
+                username = params.get('username');
+                if (username) {
+                    localStorage.setItem('username', username);
+                } else {
+                    window.location.href = '/login';
+                }
+            }
+            loadChatHistory();
+            connect();
+    };
+</script>
+
+</body>
+</html>
