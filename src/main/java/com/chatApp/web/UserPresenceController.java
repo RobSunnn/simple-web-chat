@@ -12,7 +12,6 @@ import org.springframework.context.event.EventListener;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
-@CrossOrigin(origins = "*")  // Allow all origins (adjust as needed)
 public class UserPresenceController {
 
     @Autowired
