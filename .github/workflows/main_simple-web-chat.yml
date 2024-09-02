@@ -59,4 +59,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'simple-web-chat'
-          package: '*.jar'  # Ensure this matches the directory structure
+          package: 'chatApp-0.0.1-SNAPSHOT.jar'  # Ensure this matches the directory structure
