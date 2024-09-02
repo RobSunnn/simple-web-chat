@@ -2,6 +2,7 @@ package com.chatApp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
@@ -17,23 +18,21 @@ public class UserPresenceController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    // Counter to track the number of active users
-    private AtomicInteger activeUsers = new AtomicInteger(0);
+    @Autowired
+    private SimpUserRegistry simpUserRegistry;
 
     @EventListener
     public void handleSessionConnected(SessionConnectEvent event) {
-        int userCount = activeUsers.incrementAndGet();
-        broadcastUserCount(userCount);
+        broadcastUserCount();
     }
 
     @EventListener
     public void handleSessionDisconnected(SessionDisconnectEvent event) {
-        int userCount = activeUsers.decrementAndGet();
-        broadcastUserCount(userCount);
+        broadcastUserCount();
     }
 
-    private void broadcastUserCount(int userCount) {
-        // Broadcasting the user count to the "/topic/userCount" channel immediately
+    private void broadcastUserCount() {
+        int userCount = simpUserRegistry.getUserCount();
         messagingTemplate.convertAndSend("/topic/userCount", userCount);
     }
 }

@@ -29,10 +29,9 @@ public class ChatController {
         return "login";
     }
 
-    @MessageMapping("/chat.sendMessage")
+    @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
-    public Message sendMessage(Message message) {
-        messages.add(message); // Store message on the server
+    public ChatMessage sendMessage(ChatMessage message) {
         return message;
     }
 

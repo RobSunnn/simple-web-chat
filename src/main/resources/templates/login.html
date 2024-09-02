@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Login</title>
+
+    <style>
+        .wrapper {
+            text-align: center;
+            margin: 5em auto;
+            align-self: center;
+        }
+    </style>
 </head>
 <body>
-<h2>Enter your username</h2>
-<form id="loginForm" action="/chat" method="get">
-  <input type="text" id="usernameInput" name="username" placeholder="Enter your username" required />
-  <button type="submit">Join Chat</button>
-</form>
+<div class="wrapper">
+    <h2>Enter your username</h2>
+    <form id="loginForm" action="/chat" method="get">
+        <input type="text" id="usernameInput" name="username" placeholder="Enter your username" required />
+        <button type="submit">Join Chat</button>
+    </form>
 
+</div>
 <script type="text/javascript">
         window.onload = function() {
-            var storedUsername = localStorage.getItem('username');
+            let storedUsername = localStorage.getItem('username');
             if (storedUsername) {
                 window.location.href = '/chat?username=' + encodeURIComponent(storedUsername);
             }
 
-            var loginForm = document.getElementById('loginForm');
+            let loginForm = document.getElementById('loginForm');
             loginForm.onsubmit = function() {
-                var username = document.getElementById('usernameInput').value;
+                let username = document.getElementById('usernameInput').value;
                 if (username) {
                     localStorage.setItem('username', username);
                 }
