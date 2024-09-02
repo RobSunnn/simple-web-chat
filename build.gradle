@@ -13,6 +13,16 @@ java {
 	}
 }
 
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+jar {
+	enabled = true
+}
+
 repositories {
 	mavenCentral()
 }
