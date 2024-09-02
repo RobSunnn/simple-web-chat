@@ -42,9 +42,6 @@ jobs:
       - name: List files in the directory
         run: ls -R
 
-      - name: List files in java-app directory
-        run: ls java-app
-
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -57,4 +54,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'simple-web-chat'
-          package: 'java-app/*.jar'  # Ensure this matches the directory structure
+          package: '*.jar'  # Ensure this matches the directory structure
