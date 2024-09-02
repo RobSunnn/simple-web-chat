@@ -6,20 +6,58 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
     <style>
-        #chat-container {
+        body {
+            background-color: royalblue;
+        }
+
+        .wrapper {
             text-align: center;
             margin: 5em auto;
             align-self: center;
+            border: 3px solid royalblue;
+            border-radius: 20%;
+            background-color:  #ff9f00;
+            outline: 3px solid white;
+        }
+
+        #messages {
+            background-color: royalblue;
+            color: white;
+            padding: 0.5em;
+            width: 80%;
+            margin: 3em auto;
+            text-align: left;
+            border-radius: 5%;
+            font-size: 1.3rem;
+            overflow-y: clip;
+            outline: 3px solid white;
+            border: 3px solid royalblue;
+        }
+
+        #messageInput {
+            width: 600px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        #chat-container {
+            text-align: center;
+            margin: 5em auto;
         }
     </style>
 </head>
 <body>
-<div id="chat-container">
-    <h2>Chat Room</h2>
-    <div id="messages"></div>
-    <input type="text" id="messageInput" placeholder="Type your message here..." />
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="logout()">Logout</button>
+<div class="wrapper">
+    <h1>Chat Room</h1>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <label for="messageInput"></label>
+        <textarea type="text" id="messageInput" placeholder="Type your message here..."></textarea>
+    </div>
+    <div class="buttons">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="logout()">Logout</button>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -55,7 +93,7 @@
     function showMessage(message) {
         let messagesDiv = document.getElementById('messages');
         let messageElement = document.createElement('p');
-        messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));
+        messageElement.appendChild(document.createTextNode(message.sender + " says: " + message.content));
         messagesDiv.appendChild(messageElement);
     }
 
@@ -67,7 +105,7 @@
 
     function loadChatHistory() {
         let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-        chatHistory.forEach(function(message) {
+        chatHistory.forEach(function (message) {
             showMessage(message);
         });
     }
@@ -78,7 +116,7 @@
         window.location.href = '/login';
     }
 
-    window.onload = function() {
+    window.onload = function () {
         username = localStorage.getItem('username');
         if (!username) {
             let params = new URLSearchParams(window.location.search);
