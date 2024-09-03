@@ -1,5 +1,5 @@
 Simple Web Chat Application
 
 Deployed here. 
-[Simple Web Chat](simple-web-chat.azurewebsites.net)
+[Simple Web Chat](https://simple-web-chat.azurewebsites.net)
 
