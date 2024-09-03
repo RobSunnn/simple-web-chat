@@ -1,3 +1,5 @@
 Simple Web Chat Application
 
-Deployed here.  simple-web-chat.azurewebsites.net
+Deployed here. 
+[Simple Web Chat](simple-web-chat.azurewebsites.net)
+
