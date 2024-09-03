@@ -7,36 +7,75 @@
 
     <style>
         body {
-            background-color: royalblue;
+            background: linear-gradient(to bottom, #167a4c, #ff9f00, royalblue);
+            margin: 0 auto;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            color: white;
+            font-size: 2.5em;
         }
 
         .wrapper {
             text-align: center;
+            width: 80%;
             margin: 5em auto;
             align-self: center;
             border: 3px solid royalblue;
             border-radius: 20%;
-            background-color:  #ff9f00;
+            background: linear-gradient(to bottom, #ff9f00, royalblue);
             outline: 3px solid white;
         }
 
+        .buttons {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        .btn {
+            font-size: 1.1em;
+            background-color: #0011ff;
+            color: white !important;
+            padding: 1em;
+        }
+
+        .buttons-and-text {
+            display: flex;
+            width: 60%;
+            margin: 0 auto;
+            gap: 1em;
+        }
+
         #messages {
-            background-color: royalblue;
+            background: linear-gradient(to bottom, #ffdc58, #7a4745);
             color: white;
             padding: 0.5em;
             width: 80%;
+            height: 500px;
             margin: 3em auto;
             text-align: left;
-            border-radius: 5%;
-            font-size: 1.3rem;
-            overflow-y: clip;
+            font-weight: bold;
+            font-size: 2.7rem;
+            overflow-y: scroll;
             outline: 3px solid white;
             border: 3px solid royalblue;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #ccc;
+        }
+
+        #messages::-webkit-scrollbar {
+            width: 0;
+            height: 0;
         }
 
         #messageInput {
             width: 600px;
-            height: 100px;
+            height: 125px;
             margin: 0 auto;
         }
 
@@ -51,13 +90,16 @@
     <h1>Chat Room</h1>
     <div id="chat-container">
         <div id="messages"></div>
-        <label for="messageInput"></label>
-        <textarea type="text" id="messageInput" placeholder="Type your message here..."></textarea>
+        <div class="buttons-and-text">
+            <label for="messageInput"></label>
+            <textarea type="text" id="messageInput" placeholder="Type your message here..."></textarea>
+            <div class="buttons">
+                <button onclick="sendMessage()" class="btn">Send</button>
+                <button onclick="logout()" class="btn">Logout</button>
+            </div>
+        </div>
     </div>
-    <div class="buttons">
-        <button onclick="sendMessage()">Send</button>
-        <button onclick="logout()">Logout</button>
-    </div>
+
 </div>
 
 <script type="text/javascript">
@@ -94,6 +136,7 @@
         let messagesDiv = document.getElementById('messages');
         let messageElement = document.createElement('p');
         messageElement.appendChild(document.createTextNode(message.sender + " says: " + message.content));
+        messageElement.className = 'message';
         messagesDiv.appendChild(messageElement);
     }
 
@@ -130,6 +173,17 @@
         loadChatHistory();
         connect();
     };
+</script>
+
+<script>
+    const messagesDiv = document.getElementById('messages');
+
+    function scrollToBottom() {
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    const observer = new MutationObserver(scrollToBottom);
+    observer.observe(messagesDiv, { childList: true });
 </script>
 </body>
 </html>

@@ -4,19 +4,44 @@
   <title>Login</title>
 
     <style>
+        body {
+            background: linear-gradient(to bottom, #ff9f00, royalblue);
+            margin: 0 auto;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            color: white;
+        }
+
+        input {
+            font-size: 2em;
+        }
+
+        .btn {
+            font-size: 1.3em;
+            background-color: #0011ff;
+            color: white !important;
+            padding: 1em;
+        }
+
         .wrapper {
             text-align: center;
-            margin: 5em auto;
+            width: 50%;
+            margin: 15em auto 5em auto;
+            padding: 2em;
             align-self: center;
+            background: linear-gradient(45deg, #ff9f00, royalblue);
         }
     </style>
 </head>
 <body>
 <div class="wrapper">
-    <h2>Enter your username</h2>
+
     <form id="loginForm" action="/chat" method="get">
-        <input type="text" id="usernameInput" name="username" placeholder="Enter your username" required />
-        <button type="submit">Join Chat</button>
+        <label for="usernameInput"></label><input type="text" id="usernameInput" name="username" placeholder="Enter your username" required />
+        <button type="submit" class="btn">Join Chat</button>
     </form>
 
 </div>

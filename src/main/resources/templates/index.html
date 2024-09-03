@@ -5,17 +5,47 @@
     <title>Welcome</title>
 
     <style>
+
+        body {
+            background: linear-gradient(to bottom, #ff9f00, royalblue);
+            margin: 0 auto;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            color: white;
+            font-size: 2.5em;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            background-color: royalblue;
+            border: 3px solid black;
+            padding: 1em;
+            margin: 0 auto ;
+        }
         .wrapper {
             text-align: center;
-            margin: 5em auto;
+            width: 50%;
+            margin: 15em auto 5em auto;
+            padding: 2em;
             align-self: center;
+            background: linear-gradient(45deg, #ff9f00, royalblue);
+        }
+
+        .buttons {
+            text-align: center;
         }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <h1>Welcome</h1>
-    <a href="/login">Go to Login page</a>
+    <h2>to my simple chat application</h2>
 </div>
+    <div class="buttons"><a href="/login">Go to Login page</a></div>
+
 </body>
 </html>
